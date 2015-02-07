@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Player</title>
+
+  <link rel="stylesheet" href="normalize.css">
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+</head>
+<body>
+  <div id="container">
+   
+   <!-- navbar section -->
+
+    <div class="row" id="navbar">
+      <div class="col-md-4">
+        <h4 id="logo">&lt;CodePlayer&gt;</h4>
+      </div>
+
+      <div class="col-md-4">
+        <ul id="toggles">
+          <li class="toggle selected">HTML</li>
+          <li class="toggle">CSS</li>
+          <li class="toggle">JS</li>
+          <li style="border: none" class="toggle selected">Result</li>
+          </ul>
+      </div>
+
+      <div class="col-md-4">
+        <button id="runButton">Run</button>
+      </div>
+    </div>
+  <!-- end navbar -->
+  
+  <!-- beginning of main section -->
+
+  <div class="clear"></div>
+
+  <div class="row" id="main">
+
+    <div class="col-md-3" id="HTMLContainer">
+      <div class="codeLabel">HTML</div><br>
+      <textarea id="htmlCode">Input your code. When you're done click, run!</textarea>
+    </div>
+
+    <div class="col-md-3" id="CSSContainer">
+      <div class="codeLabel">CSS</div>
+      <textarea id="cssCode"></textarea>
+    </div>
+
+    <div class="col-md-3" id="JSContainer">
+      <div class="codeLabel">JS</div>
+      <textarea id="jsCode"></textarea>
+    </div>
+
+    <div class="col-md-3" id="ResultContainer">
+        <div style="margin-right: 10px" class="codeLabel">Result</div>
+        <iframe id="resultFrame"></iframe>
+
+    </div>
+  </div><!-- end main section -->
+
+  </div><!-- end container -->
+
+  <script type="text/javascript">
+
+    var windowHeight = $(window).height();
+    var navHeight = $("#navbar").height();
+    
+    var mainHeight = windowHeight - navHeight;
+
+    $("#main").height(mainHeight+"px");
+    
+    $(".toggle").click(function() {
+
+      $(this).toggleClass("selected");
+
+      var activeDiv=$(this).html();
+
+      $("#"+activeDiv+"Container").toggle();
+
+    });
+
+    $("#runButton").click(function() {
+
+      $('#resultFrame').contents().find('html').html("<style>"+$('#cssCode').val()+"</style>"+$("#htmlCode").val());
+
+        document.getElementById('#resultFrame').contentWindow.eval($('#jsCode').val());
+
+    });
+
+
+  </script>
+
+  
+</body>
+</html>
